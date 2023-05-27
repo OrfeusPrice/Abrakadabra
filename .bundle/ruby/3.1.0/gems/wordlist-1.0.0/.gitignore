@@ -1,0 +1,14 @@
+/Gemfile.lock
+/benchmarks
+/coverage
+/doc
+/pkg
+/tmp
+scripts/*_wordlist.txt
+.DS_Store
+.bundle
+.yardoc
+*.db
+*.log
+*.swp
+*~

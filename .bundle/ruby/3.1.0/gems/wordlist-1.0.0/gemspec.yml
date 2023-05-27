@@ -1,0 +1,16 @@
+name: wordlist
+summary: Ruby library for reading, manipulating, and creating wordlists.
+description:
+  Wordlist is a Ruby library for reading, manipulating, and creating wordlists,
+  efficiently.
+
+license: MIT
+authors: Postmodern
+email: postmodern.mod3@gmail.com
+homepage: https://github.com/postmodern/wordlist.rb
+has_yard: true
+
+development_dependencies:
+  rubygems-tasks: ~> 0.1
+  rspec: ~> 2.4
+  yard: ~> 0.8

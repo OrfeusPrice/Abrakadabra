@@ -1,0 +1,72 @@
+h1. Random Word Generator
+
+h2. What
+
+The Random Word Generator is a very simple library with a very limited usage.
+Its primary purpose is to generate a random string based on English dictionary words.
+
+Born from a ruby challenge, I figured that this gem could be helpful to generate activation codes easy for people to remember.
+
+h2. Installing
+
+<pre syntax="ruby">sudo gem install random_word_generator</pre>
+
+h2. The basics
+
+Generate a random word:
+  RandomWordGenerator.word
+  
+Generate a random word of a specific length:
+  RandomWordGenerator.of_length(15)
+
+Generate a string composed of random words where the sum of the length of the words is equal to a specific value:
+  RandomWordGenerator.composed(2, 15)
+
+h2. Demonstration of usage
+
+require 'random_word_generator'
+=> true
+
+RandomWordGenerator.word
+=> "woozily"
+
+RandomWordGenerator.word
+=> "reviewable"
+
+RandomWordGenerator.of_length(15)
+=> "unseaworthiness"
+
+RandomWordGenerator.of_length(15)
+=> "downheartedness"
+
+RandomWordGenerator.of_length(7)
+=> "whooper"
+
+RandomWordGenerator.composed(2, 15)
+=> "yows woodcarver"
+
+RandomWordGenerator.composed(2, 15)
+=> "swamplands thew"
+
+RandomWordGenerator.composed(2, 20, '-')
+=> "enamelware-whitehead"
+
+RandomWordGenerator.composed(3, 27, '|')
+=> "floorwalker|yows|forwarders"
+
+  
+(look in the spec folder for more usage examples)
+
+h2. How to submit patches
+
+Read the "8 steps for fixing other people's code":http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/ 
+
+The trunk repository is <code>svn://rubyforge.org/var/svn/random_word_generator/trunk</code> for anonymous access.
+
+h2. License
+
+This code is free to use under the terms of the MIT license. 
+
+h2. Contact
+
+Comments are welcome. Send an email to "Matt Aimonetti":mailto:mattaimonetti@gmail.com
