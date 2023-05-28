@@ -1,7 +1,10 @@
 require 'colorize'
 
-WORD_LIST = Array.new
+WORD_LIST = []
 File.open('words.txt').each { |line| WORD_LIST << line }
+for w in WORD_LIST
+  w.downcase
+end
 
 def get_random_word
   rand = Random.new
@@ -18,7 +21,7 @@ def get_answer_layout(answer, word)
               elsif word.include?(char)
                 char.colorize(:yellow)
               else
-                '_'.colorize(:light_black)
+                char.colorize(:light_black)
               end
   end
 
@@ -26,30 +29,51 @@ def get_answer_layout(answer, word)
 end
 
 def play_game
+  word_size = 2
+  loop do
+    print('Введите, из скольки букв вы хотите слово (от 2 до 11): ')
+    word_size = gets
+    break if word_size.to_i >= 2 && word_size.to_i <= 11
+  end
   word = get_random_word
+  # puts format('%s -  %d ? %f', word, word.size - 1, word_size.to_i)
+  if word.size != word_size.to_i + 1
+    loop do
+      word = get_random_word
+      # puts format('%s -  %d ? %f', word, word.size - 1, word_size.to_i)
+      break if word.size == word_size.to_i + 1
+    end
+  end
 
+  puts format('Я загадал слово из %s букв!', word.size - 1)
   attempts = 0
   max_attempts = 7
   answer = ' '
 
-  puts format('Слово загадано! У вас %s попыток, чтобы угадать его.', max_attempts)
+  puts format('У вас %s попыток, чтобы угадать его.', max_attempts)
 
   loop do
     puts format('Попытка №%s', attempts + 1)
     puts format('Предыдущий ответ: %s', get_answer_layout(answer, word))
     print 'Введите ваш ответ: '
-    input = gets.chomp.downcase
-
-    if input == word.downcase
-      puts format('Поздравляем, вы угадали слово %s!!!', word)
-      break
-    elsif attempts == max_attempts - 1
-      puts format('У вас закончились попытки! Слово было %s. Попробуйте еще раз.', word)
-      break
+    input = gets
+    # puts input.size - 1
+    if WORD_LIST.include?(input.downcase) && input.size == word.size
+      if input == word.downcase
+        puts format('Поздравляем, вы угадали слово %s!!!', word)
+        break
+      elsif attempts == max_attempts - 1
+        puts format('У вас закончились попытки! Слово было %s. Попробуйте еще раз.', word)
+        break
+      else
+        attempts += 1
+        answer = input
+        puts format('Не верно! Осталось %s попыток.', max_attempts - attempts)
+      end
     else
-      attempts += 1
-      answer = input
-      puts format('Не верно! Осталось %s попыток.', max_attempts - attempts)
+      puts format(
+        'Либо не то кол-во букв (надо: %s, ввели: %d), либо я не знаю такого слова :(, попробуйте ввести другое.', word.size - 1, input.size - 1
+      )
     end
   end
 end
