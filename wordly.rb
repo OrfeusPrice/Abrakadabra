@@ -1,17 +1,21 @@
 require 'colorize'
 
+#Словарь со словами для игры
 WORD_LIST = []
 
+#Заполнение словаря словами длины size
 def fill_words(size)
   File.open(size.strip + '.txt').each { |line| WORD_LIST << line.strip.downcase }
 end
 
+#Получение случайного слова из словаря
 def get_random_word
   rand = Random.new
   i = rand(WORD_LIST.size)
   WORD_LIST[i]
 end
 
+#Вывод соответсвия введённого слова игроком по отношению к загаданному
 def get_answer_layout(answer, word)
   layout = ''
 
@@ -28,6 +32,7 @@ def get_answer_layout(answer, word)
   layout.strip
 end
 
+#Основная игра
 def play_game
   word_size = 2
 
