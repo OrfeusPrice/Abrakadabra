@@ -17,6 +17,9 @@ Beacuse Ruby repls use [Bundle](https://bundler.io/) under the hood to provide a
 ## Authors
 Abrakadabra was created by a team of Ruby developers: Kalashnikova Arina, Prikhod'ko Alexey, Staren'kaya Anastasia, Tsaturyan Maria.
 
+## License
+Abrakadabra is distributed under the MIT license. See LICENSE for details.
+
 ## Help
 
 If you need help you might be able to find an answer on our [docs](https://docs.replit.com) page. Feel free to report bugs and give us feedback [here](https://replit.com/support).
