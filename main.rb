@@ -1,3 +1,3 @@
-require './wordly'
+require './abrakadabra'
 
 play_game
