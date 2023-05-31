@@ -1,5 +1,5 @@
 require 'test/unit'
-require_relative '../wordly'
+require_relative '../abrakadabra'
 class TestAnswerLayout < Test::Unit::TestCase
   def test_no_matches
     expected = "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black)
