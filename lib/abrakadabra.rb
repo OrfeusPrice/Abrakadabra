@@ -1,23 +1,23 @@
-require 'colorize'
+require "colorize"
 
-#Словарь со словами для игры
+# Словарь со словами для игры
 WORD_LIST = []
 
-#Заполнение словаря словами длины size
+# Заполнение словаря словами длины size
 def fill_words(size)
-  File.open('./words/' + size.strip + '.txt').each { |line| WORD_LIST << line.strip.downcase }
+  File.open("./words/" + size.strip + ".txt").each { |line| WORD_LIST << line.strip.downcase }
 end
 
-#Получение случайного слова из словаря
+# Получение случайного слова из словаря
 def get_random_word
   rand = Random.new
   i = rand(WORD_LIST.size)
   WORD_LIST[i]
 end
 
-#Вывод соответсвия введённого слова игроком по отношению к загаданному
+# Вывод соответсвия введённого слова игроком по отношению к загаданному
 def get_answer_layout(answer, word)
-  layout = ''
+  layout = ""
 
   answer.each_char.with_index do |char, i|
     layout += if char == word[i]
@@ -32,12 +32,18 @@ def get_answer_layout(answer, word)
   layout.strip
 end
 
-#Основная игра
+# Возвращает количество оставшихся попыток
+# после проверки соответсвия слова заданному
+def check_word(answer, word, attempts)
+  attempts += 1 if word == answer || WORD_LIST.include?(answer)
+  attempts
+end
+
+# Пример Реализации Игры
 def play_game
   word_size = 2
-
   loop do
-    print('Введите, из скольки букв вы хотите слово (от 2 до 11): ')
+    print("Введите, из скольки букв вы хотите слово (от 2 до 11): ")
     word_size = gets
     break if word_size.to_i >= 2 && word_size.to_i <= 11
 
@@ -46,10 +52,8 @@ def play_game
 
   fill_words(word_size)
   word = get_random_word
-  # puts format('%s -  %d ? %f', word, word.size - 1, word_size.to_i)
 
   puts format("\nЯ загадал слово из %s букв!", word.size)
-  attempts = 0
   max_attempts = case word_size.to_i
                  when 2
                    9
@@ -70,36 +74,36 @@ def play_game
                  end
 
   answers = []
-
-  puts format('У вас %s попыток, чтобы угадать его.', max_attempts)
+  attempts = 0
+  puts format("У вас %s попыток, чтобы угадать его.", max_attempts)
 
   loop do
     puts format("\nПопытка №%s", attempts + 1)
-    puts('Предыдущие ответы:')
+    puts("Предыдущие ответы:")
     for item in answers do
-      puts ' ' * 19 + get_answer_layout(item, word)
+      puts " " * 19 + get_answer_layout(item, word)
     end
-    print 'Введите ваш ответ: '
+
+    print "Введите ваш ответ: "
     input = gets.downcase.strip
 
+   
+    check = check_word(input, word, attempts)
     # слово равно загаданному
-    if word == input
-    puts format('Поздравляем, вы угадали слово %s!!!', word)
-    break
-    # исчерпаны все попытки
+    if check != attempts && word == input
+      puts format("Поздравляем, вы угадали слово %s!!!", word)
+      break
     elsif attempts == max_attempts - 1
       puts format("\nУ вас закончились попытки!\nЗагаданное слово: %s.\nПопробуйте еще раз.", word)
       break
-      # размер не соответсвует нужному
-    elsif input.size != word.size
-      puts format('Неправильный размер введённого слова (надо: %s; ввели: %d)', word.size, input.size)
-    elsif WORD_LIST.include?(input)
-      attempts += 1
-      answers << input
-      puts format('Не верно! Осталось %s попыток.', max_attempts - attempts)
+    # размер не соответсвует параметрам ввода
+    elsif check == attempts
+      puts format("Неправильный размер введённого слова (надо: %s; ввели: %d)", word.size, input.size)
+      puts("Либо я не знаю такого слова!")
     else
-      puts 'Я не знаю такого слова :(. Попробуйте ввести другое!'
-
+      answers << input
+      attempts = check
+      puts format("Не верно! Осталось %s попыток.", max_attempts - attempts)
     end
   end
 end

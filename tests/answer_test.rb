@@ -1,5 +1,6 @@
 require 'test/unit'
-require_relative '../abrakadabra'
+require_relative '../lib/abrakadabra'
+
 class TestAnswerLayout < Test::Unit::TestCase
   def test_no_matches
     expected = "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black) + "а".colorize(:light_black)
@@ -34,5 +35,34 @@ class TestAnswerLayout < Test::Unit::TestCase
   def test_all_matches
     expected = "к".colorize(:green) + "а".colorize(:green) + "р".colorize(:green) + "м".colorize(:green) + "а".colorize(:green)
     assert_equal(expected, get_answer_layout("карма", "карма"))
+  end
+end
+
+class TestCheckWord < Test::Unit::TestCase
+  fill_words('5')
+  
+  def test_shorter_word
+    expected = 5
+    assert_equal(expected, check_word('яхта', 'шприц', 5))
+  end
+
+  def test_longer_word
+    expected = 3
+    assert_equal(expected, check_word('шампунь', 'манго', 3))
+  end
+
+  def test_word_doesnt_exist
+    expected = 7
+    assert_equal(expected, check_word('гасть', 'кость', 7))
+  end
+
+  def test_no_match
+    expected = 6
+    assert_equal(expected, check_word("диван", "мечта", 5))
+  end
+
+  def test_match
+    expected = 3
+    assert_equal(expected, check_word("рыбак", "рыбак", 2))
   end
 end
