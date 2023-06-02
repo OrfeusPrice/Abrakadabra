@@ -5,7 +5,7 @@ WORD_LIST = []
 
 #Заполнение словаря словами длины size
 def fill_words(size)
-  File.open(size.strip + '.txt').each { |line| WORD_LIST << line.strip.downcase }
+  File.open('./words/' + size.strip + '.txt').each { |line| WORD_LIST << line.strip.downcase }
 end
 
 #Получение случайного слова из словаря
